@@ -10,23 +10,30 @@ public class XMPTest {
 
 	public static void main(String[] args) {
 		try {
-			
-			JpegPicture picture = new JpegPicture("e:\\1.jpg");
-			XMPManager xmpTest = new XMPManager();
-			xmpTest.readfromAPP1(picture.getXMPdata());
-			byte[] aaaa =picture.getXMPdata();
-			for (int i=0;i<aaaa.length;i++){
-				System.out.print((char)aaaa[i]);
+
+			JpegPicture picture = new JpegPicture("e:\\rez.jpg");
+
+			// xmpTest.readfromAPP1(picture.getXMPdata());
+			XMPManager xm = new XMPManager(picture);
+			xm.getXmpXML().addBasicSchema().addAdvisory("cucu");
+			xm.saveXMPintoPicture();
+			picture.saveFile("e:\\rez2.jpg");
+			byte[] aaaa = xm.getXMPasBytes();
+			if (aaaa != null) {
+				for (int i = 0; i < aaaa.length; i++) {
+					System.out.print((char) aaaa[i]);
+				}
+			} else {
+				System.out.print("No data.");
 			}
-			xmpTest.getXMPasBytes();
-			char[] aaa =xmpTest.getXMPasBytes();
-			for (int i=0;i<aaa.length;i++){
-				System.out.print(aaa[i]);
-			}
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (JpegProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
