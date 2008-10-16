@@ -104,7 +104,7 @@ public class XMPMetadata
                 .createProcessingInstruction("xpacket",
                         "begin=\"\uFEFF\" id=\"W5M0MpCehiHzreSzNTczkc9d\"");
 
-        xmpDocument.appendChild(beginXPacket);
+        //xmpDocument.appendChild(beginXPacket);
         Element xmpMeta = xmpDocument.createElementNS("adobe:ns:meta/",
                 "xmp:xmpmeta");
         xmpMeta.setAttributeNS(XMPSchema.NS_NAMESPACE, "xmlns:xmp",
