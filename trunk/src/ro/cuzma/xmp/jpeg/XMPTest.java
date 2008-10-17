@@ -2,6 +2,8 @@ package ro.cuzma.xmp.jpeg;
 
 import java.io.IOException;
 
+import org.jempbox.xmp.XMPSchemaBasic;
+
 import com.drew.imaging.jpeg.JpegProcessingException;
 
 import ro.cuzma.jpeg.JpegPicture;
@@ -11,12 +13,21 @@ public class XMPTest {
 	public static void main(String[] args) {
 		try {
 
-			JpegPicture picture = new JpegPicture("e:\\rez.jpg");
+			JpegPicture picture = new JpegPicture("e:\\2.jpg");
 
 			// xmpTest.readfromAPP1(picture.getXMPdata());
 			XMPManager xm = new XMPManager(picture);
-			xm.getXmpXML().addBasicSchema().addAdvisory("cucu");
+			XMPSchemaBasic tmp = xm.getXmpXML().getBasicSchema();
+			if (tmp == null ){
+				xm.getXmpXML().addBasicSchema();
+				tmp = xm.getXmpXML().getBasicSchema();
+			}
+			tmp.setRating(5);
+			tmp.setNickname("aura");
+			tmp.setRating(4);
+			tmp.setNickname("larry");
 			xm.saveXMPintoPicture();
+			
 			picture.saveFile("e:\\rez2.jpg");
 			byte[] aaaa = xm.getXMPasBytes();
 			if (aaaa != null) {
