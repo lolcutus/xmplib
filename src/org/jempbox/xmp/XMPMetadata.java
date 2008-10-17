@@ -120,7 +120,7 @@ public class XMPMetadata
 
         ProcessingInstruction endXPacket = xmpDocument
                 .createProcessingInstruction("xpacket", "end=\"w\"");
-        xmpDocument.appendChild(endXPacket);
+        //xmpDocument.appendChild(endXPacket);
         init();
     }
 

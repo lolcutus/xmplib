@@ -61,7 +61,7 @@ public class XMPManager {
 	private void readfromAPP1() throws IOException {
 		int nr_of_app1 = picture.getJpegSegmentData().getSegmentCount(
 				JpegSegmentReader.SEGMENT_APP1);
-		System.out.println("occurences: " + nr_of_app1);
+		//System.out.println("occurences: " + nr_of_app1);
 		for (int k = 0; k < nr_of_app1; k++) {
 			byte[] content = picture.getJpegSegmentData().getSegment(
 					JpegSegmentReader.SEGMENT_APP1, k);
@@ -99,13 +99,13 @@ public class XMPManager {
 						// qq++) System.out.print((char)
 						// segmentBytes[qq]);
 
-						System.out
+						/*System.out
 								.println("read===============================");
 						for (int m = startByte; m < endByte; m++) {
 							System.out.print((char) content[m]);
 						}
 						System.out
-								.println("read-end===============================");
+								.println("read-end===============================");*/
 
 						ByteArrayInputStream bis = new ByteArrayInputStream(
 								content, startByte, endByte - startByte);
