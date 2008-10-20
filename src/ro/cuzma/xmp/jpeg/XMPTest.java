@@ -13,7 +13,7 @@ public class XMPTest {
 	public static void main(String[] args) {
 		try {
 
-			JpegPicture picture = new JpegPicture("e:\\2.jpg");
+			JpegPicture picture = new JpegPicture("E:\\manu.jpg");
 
 			// xmpTest.readfromAPP1(picture.getXMPdata());
 			XMPManager xm = new XMPManager(picture);
@@ -23,12 +23,9 @@ public class XMPTest {
 				tmp = xm.getXmpXML().getBasicSchema();
 			}
 			tmp.setRating(5);
-			tmp.setNickname("aura");
-			tmp.setRating(4);
-			tmp.setNickname("larry");
 			xm.saveXMPintoPicture();
 			
-			picture.saveFile("e:\\rez2.jpg");
+			picture.saveFile("e:\\rez3.jpg");
 			byte[] aaaa = xm.getXMPasBytes();
 			if (aaaa != null) {
 				for (int i = 0; i < aaaa.length; i++) {

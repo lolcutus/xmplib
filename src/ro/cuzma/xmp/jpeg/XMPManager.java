@@ -12,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
@@ -169,9 +170,9 @@ public class XMPManager {
 			DOMSource source = new DOMSource(this.getXmpXML().getXMPDocument());
 			transformer.transform(source, result);
 			String strange = "" + (char) 0xEF + (char) 0xBB + (char) 0xBF;
-			String rezS = "http://ns.adobe.com/xap/1.0/ ";
-			rezS += "<?xpacket begin=\"" + strange
-					+ "\"id=\"W5M0MpCehiHzreSzNTczkc9d\"?>";
+			String rezS = "http://ns.adobe.com/xap/1.0/" + (char)0x00;
+			rezS += "<?xpacket begin=\'" + strange
+					+ "\' id=\"W5M0MpCehiHzreSzNTczkc9d\"?>";
 			String conversion = ba.toString();
 			rezS += ba.toString() + "<?xpacket end='w'?>";
 			rez = new byte[rezS.length()];
