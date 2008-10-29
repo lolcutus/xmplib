@@ -1,17 +1,9 @@
 package ro.cuzma.xmp.jpeg;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.List;
-
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -25,11 +17,7 @@ import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.jempbox.xmp.Thumbnail;
 import org.jempbox.xmp.XMPMetadata;
-import org.jempbox.xmp.XMPSchemaBasic;
-import org.jempbox.xmp.XMPSchemaDublinCore;
-import org.jempbox.xmp.XMPSchemaPDF;
 import org.w3c.dom.Document;
 
 import com.drew.imaging.jpeg.JpegSegmentReader;
@@ -55,21 +43,16 @@ public class XMPManager {
 
 	public XMPManager(JpegPicture picture) throws IOException {
 		this.picture = picture;
-		// get xmp from picture
 		readfromAPP1();
 	}
 
 	private void readfromAPP1() throws IOException {
 		int nr_of_app1 = picture.getJpegSegmentData().getSegmentCount(
 				JpegSegmentReader.SEGMENT_APP1);
-		//System.out.println("occurences: " + nr_of_app1);
 		for (int k = 0; k < nr_of_app1; k++) {
 			byte[] content = picture.getJpegSegmentData().getSegment(
 					JpegSegmentReader.SEGMENT_APP1, k);
-
 			try {
-				int offset = 0;
-
 				int lenghtSeg = content.length;
 				byte[] magic = "W5M0MpCehiHzreSzNTczkc9d".getBytes();
 				int j = 0;
@@ -96,18 +79,6 @@ public class XMPManager {
 					}
 					if (j == magicEnd.length) {
 						int endByte = i - magicEnd.length;
-						// for (int qq = startByte; qq < endByte;
-						// qq++) System.out.print((char)
-						// segmentBytes[qq]);
-
-						/*System.out
-								.println("read===============================");
-						for (int m = startByte; m < endByte; m++) {
-							System.out.print((char) content[m]);
-						}
-						System.out
-								.println("read-end===============================");*/
-
 						ByteArrayInputStream bis = new ByteArrayInputStream(
 								content, startByte, endByte - startByte);
 						DocumentBuilderFactory factory = DocumentBuilderFactory
@@ -126,7 +97,6 @@ public class XMPManager {
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			if (xmpMeta != null) {
@@ -141,7 +111,7 @@ public class XMPManager {
 
 	}
 
-	public void saveXMPintoPicture() {
+	public void saveXMPintoAPP1() {
 		if (seggmentOccurence != XMPManager.NO_OCCURENCE) {
 			picture.getJpegSegmentData().removeSegmentOccurrence(
 					JpegSegmentReader.SEGMENT_APP1, seggmentOccurence);
@@ -162,6 +132,7 @@ public class XMPManager {
 			transformer = TransformerFactory.newInstance().newTransformer();
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			transformer.setOutputProperty(OutputKeys.ENCODING, encoding);
+			transformer.setOutputProperty(OutputKeys.METHOD,"xml");
 			transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION,
 					"yes");
 			// initialize StreamResult with File object to save to file
@@ -170,33 +141,20 @@ public class XMPManager {
 			DOMSource source = new DOMSource(this.getXmpXML().getXMPDocument());
 			transformer.transform(source, result);
 			String strange = "" + (char) 0xEF + (char) 0xBB + (char) 0xBF;
-			String rezS = "http://ns.adobe.com/xap/1.0/" + (char)0x00;
+			String rezS = "http://ns.adobe.com/xap/1.0/" + (char) 0x00;
 			rezS += "<?xpacket begin=\'" + strange
 					+ "\' id=\"W5M0MpCehiHzreSzNTczkc9d\"?>";
-			String conversion = ba.toString();
 			rezS += ba.toString() + "<?xpacket end='w'?>";
 			rez = new byte[rezS.length()];
 			for (int i = 0; i < rezS.length(); i++)
 				rez[i] = (byte) rezS.charAt(i);
-			// return rez;
 		} catch (TransformerConfigurationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (TransformerFactoryConfigurationError e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (TransformerException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		/*if (rez == null) {
-			System.out.println("Oau, No data.");
-		} else {
-			System.out.println("Oau: " + rez.length);
-			for (int i = 0; i < rez.length; i++) {
-				System.out.print((char) rez[i]);
-			}
-		}*/
 		return rez;
 
 	}

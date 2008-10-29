@@ -542,4 +542,8 @@ public class XMPSchemaDublinCore extends XMPSchema
     {
         return getBagList(prefix + ":type" );
     }
+    
+    public void removeSubjectTag(){
+    	removeTag(prefix +":subject");
+    }
 }

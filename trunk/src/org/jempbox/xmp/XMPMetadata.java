@@ -481,6 +481,10 @@ public class XMPMetadata
         XMPSchemaPhotoshop schema = new XMPSchemaPhotoshop(this);
         return (XMPSchemaPhotoshop) basicAddSchema(schema);
     }
+    public XMPSchemaPhotoshop getPhotoshopSchema() throws IOException
+    {
+        return (XMPSchemaPhotoshop) getSchemaByClass(XMPSchemaPhotoshop.class);
+    }
 
     /**
      * The encoding used to write the XML. Default value:UTF-8<br/> See the
