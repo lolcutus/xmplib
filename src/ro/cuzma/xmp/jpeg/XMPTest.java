@@ -6,7 +6,6 @@ import org.jempbox.xmp.XMPSchemaBasic;
 import org.jempbox.xmp.XMPSchemaDublinCore;
 import org.jempbox.xmp.XMPSchemaPhotoshop;
 
-import ro.cuzma.jpeg.JpegPicture;
 
 import com.drew.imaging.jpeg.JpegProcessingException;
 
