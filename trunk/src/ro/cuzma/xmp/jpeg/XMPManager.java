@@ -22,7 +22,6 @@ import org.w3c.dom.Document;
 
 import com.drew.imaging.jpeg.JpegSegmentReader;
 
-import ro.cuzma.jpeg.JpegPicture;
 
 public class XMPManager {
 	private String encoding = "UTF-8";
