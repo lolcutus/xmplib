@@ -16,7 +16,7 @@ public class XMPTest {
 	public static void main(String[] args) {
 		try {
 
-			JpegPicture picture = new JpegPicture("E:\\1.jpg");
+			JpegPicture picture = new JpegPicture("E:\\2.jpg");
 			XMPManager xm = new XMPManager(picture);
 			XMPSchemaBasic tmp = xm.getXmpXML().getBasicSchema();
 			if (tmp == null ){
@@ -44,7 +44,7 @@ public class XMPTest {
 			ps.setState("Timis");
 			ps.setCountry("Romania");
 			xm.saveXMPintoAPP1();
-			picture.saveFile("e:\\1_xmp3.jpg");
+			picture.saveFile("e:\\2_xmp3.jpg");
 			byte[] aaaa = xm.getXMPasBytes();
 			if (aaaa != null) {
 				for (int i = 0; i < aaaa.length; i++) {
